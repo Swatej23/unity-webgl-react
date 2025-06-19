@@ -12,8 +12,8 @@ const UNITY_CONFIG = {
     RESET_COUNT: "OnClickReset",
   },
   EVENTS: {
-    UPDATE_COUNT: "UpdateCount",
-    ACHIEVEMENT: "TriggerAchievement",
+    UPDATE_COUNT: "UpdateCountInReact",   
+    ACHIEVEMENT: "CallReactMethodFromUnity", 
   },
 };
 
@@ -34,10 +34,10 @@ function App() {
     addEventListener,
     removeEventListener,
   } = useUnityContext({
-    loaderUrl: "/unitybuild/react-unity-webgl.loader.js",
-    dataUrl: "/unitybuild/react-unity-webgl.data",
-    frameworkUrl: "/unitybuild/react-unity-webgl.framework.js",
-    codeUrl: "/unitybuild/react-unity-webgl.wasm",
+    loaderUrl: `${process.env.PUBLIC_URL}/unitybuild/react-unity-webgl.loader.js`,
+    dataUrl: `${process.env.PUBLIC_URL}/unitybuild/react-unity-webgl.data`,
+    frameworkUrl: `${process.env.PUBLIC_URL}/unitybuild/react-unity-webgl.framework.js`,
+    codeUrl: `${process.env.PUBLIC_URL}/unitybuild/react-unity-webgl.wasm`,
   });
 
   const handleClickFullscreen = async () => {
@@ -92,12 +92,12 @@ function App() {
   }, [devicePixelRatio]);
 
   useEffect(() => {
-    const handleUpdateCount = (count) => {
-      setMessage(parseInt(count, 10));
+    const handleUpdateCount = (event) => {
+      setMessage(parseInt(event.detail, 10));
     };
 
-    const handleAchievement = (count) => {
-      const countValue = parseInt(count, 10);
+    const handleAchievement = (event) => {
+      const countValue = parseInt(event.detail, 10);
       console.log("Achievement unlocked at count:", countValue);
       setMessage(countValue);
       setToastVisible(true);
@@ -108,12 +108,12 @@ function App() {
       }, 1000);
     };
 
-    addEventListener(UNITY_CONFIG.EVENTS.UPDATE_COUNT, handleUpdateCount);
-    addEventListener(UNITY_CONFIG.EVENTS.ACHIEVEMENT, handleAchievement);
+    window.addEventListener(UNITY_CONFIG.EVENTS.UPDATE_COUNT, handleUpdateCount);
+    window.addEventListener(UNITY_CONFIG.EVENTS.ACHIEVEMENT, handleAchievement);
 
     return () => {
-      removeEventListener(UNITY_CONFIG.EVENTS.UPDATE_COUNT, handleUpdateCount);
-      removeEventListener(UNITY_CONFIG.EVENTS.ACHIEVEMENT, handleAchievement);
+      window.removeEventListener(UNITY_CONFIG.EVENTS.UPDATE_COUNT, handleUpdateCount);
+      window.removeEventListener(UNITY_CONFIG.EVENTS.ACHIEVEMENT, handleAchievement);
     };
   }, [addEventListener, removeEventListener, fireRain, fireBurst]);
 
