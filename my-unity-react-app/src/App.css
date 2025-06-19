@@ -1,0 +1,231 @@
+.App {
+  text-align: center;
+  background-color: #282c34; /* Added a slightly different dark bg for the whole app */
+  min-height: 100vh; /* Ensure app container takes at least full height */
+  display: flex;
+  flex-direction: column;
+}
+
+.unity-logo {
+  height: 10vmin; /* Made logo smaller for a more compact header */
+  pointer-events: none;
+}
+
+.react-logo {
+  height: 10vmin; /* Made logo smaller for a more compact header */
+  pointer-events: none;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .react-logo {
+    animation: logo-spin infinite 20s linear;
+  }
+}
+
+.App-header {
+  background-color: #282c34;
+  /* min-height: 100vh; /* MODIFIED: This was making the header too tall */
+  /* Let header size by content or set a fixed smaller height */
+  padding: 20px; /* Added padding */
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  font-size: calc(8px + 2vmin); /* Adjusted font size for smaller header */
+  color: white;
+  /* Removed padding-bottom as general padding is used */
+}
+
+.App-link {
+  color: #61dafb;
+}
+
+@keyframes logo-spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.logo-container{
+  display: flex;
+  gap: 20px;
+  justify-content: center;
+}
+
+/* Styles for the section containing Unity elements */
+.UnitySection {
+  flex-grow: 1; /* Allows this section to take available space */
+  display: flex;
+  flex-direction: column;
+  align-items: center; /* Center Unity canvas and button */
+  justify-content: center; /* Center content vertically if space allows */
+  padding: 20px;
+  background-color: #282c34; /* Slightly different dark for this section */
+}
+
+
+/* New Styles for Unity Loader and Canvas */
+.UnityLoadingContainer {
+  text-align: center;
+  padding: 20px;
+  /* background-color: #282c34; /* Inherits from UnitySection or set explicitly */
+  width: 100%;
+  max-width: 600px; /* Max width for loading bar area */
+}
+
+.UnityLoadingText {
+  margin-bottom: 15px;
+  font-size: 1.1em;
+  color: #cccccc; /* Lighter text color for dark background */
+}
+
+.UnityProgressBarContainer {
+  width: 80%; /* Relative to its parent UnityLoadingContainer */
+  margin: 10px auto;
+  background-color: #3a3f47; /* Darker background for progress bar container */
+  border-radius: 5px;
+  /* border: 1px solid #444; */ /* Optional border */
+  overflow: hidden;
+}
+
+.UnityProgressBar {
+  height: 20px; /* Slightly slimmer bar */
+  background-color: #61dafb; /* React blue for progress */
+  border-radius: 5px;
+  transition: width 0.3s ease-in-out;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #282c34; /* Dark text on light blue bar */
+  font-weight: bold;
+  font-size: 0.8em;
+}
+
+.UnityCanvas {
+  /* width and height can be set via inline styles in JS or here */
+  /* Default width/height are now in the JS for easier access with useUnityContext potentially */
+   width: 1080px; /* Default width if not overridden by inline style */
+   height: 720px;  /* Default height if not overridden by inline style */
+  margin: 20px auto; /* Center the canvas */
+  display: block;
+  /* background-color: #000000; /* Set if you want the canvas div itself to be black */
+  /* border: 2px solid transparent; */ /* Removing default border, add if needed */
+}
+
+.UnityCanvas.loaded {
+  /* border: 1px solid #444; */ /* Optional border when loaded */
+  box-shadow: 0 0 15px rgba(0,0,0,0.5); /* Add a subtle shadow to loaded canvas */
+}
+
+
+/* Styles for the "Load Unity Scene" button */
+.loadUnityBtn {
+  background-color: #61dafb;
+  color: #20232a;
+  padding: 12px 25px;
+  border: none;
+  border-radius: 5px;
+  font-size: 18px;
+  font-weight: bold;
+  cursor: pointer;
+  margin: 30px auto; /* Increased margin for better separation */
+  display: block;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+  transition: background-color 0.2s ease, transform 0.1s ease;
+}
+
+.loadUnityBtn:hover {
+  background-color: #52c7e9;
+}
+.loadUnityBtn:active {
+  transform: translateY(1px); /* Simple press effect */
+}
+
+.button-container {
+  display: flex;
+  flex-wrap: wrap; /* Allows buttons to wrap to the next line if needed */
+  gap: 30px; /* Space between buttons */
+  align-items: center;
+  justify-content: center; 
+  margin-top: 20px;
+  margin-bottom: 20px;
+}
+
+.button {
+  background-color: #61dafb; /* React blue, prominent */
+  color: #20232a; /* Dark text for contrast */
+  padding: 10px 20px;
+  border: none;
+  border-radius: 5px;
+  font-size: 16px;
+  font-weight: bold;
+  cursor: pointer;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+  transition: background-color 0.2s ease;
+}
+
+.button:hover {
+  background-color: #52c7e9; /* Slightly darker on hover */
+}
+
+.count{
+  justify-content: center;
+  font-size: calc(12px + 2vmin);
+  color: white;
+}
+
+.achievement-text{
+  justify-content: center;
+  font-size: calc(8px + 2vmin);
+  color: white;
+}
+
+.achievement-toast {
+  background: linear-gradient(135deg, #ff6a00, #ee0979); /* Gradient background */
+  color: #fff;
+  padding: 15px 30px;
+  border-radius: 12px; /* Rounded corners */
+  font-weight: bold;
+  font-size: 18px; /* Slightly larger font */
+  position: fixed; /* Fixed to the viewport */
+  top: 50%; /* Vertically center */
+  left: 50%; /* Horizontally center */
+  transform: translate(-50%, -50%); /* Offset to exactly center */
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.2); /* Strong shadow */
+  z-index: 999;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  max-width: 80%; /* Responsive */
+  text-align: center;
+  border: 2px solid #fff; /* White border */
+  opacity: 0; /* Start with opacity 0 */
+  animation: fadeInOut 2s ease-in-out; /* Fade-in fade-out effect */
+}
+
+.achievement-toast .message {
+  margin: 0;
+  padding: 0;
+  font-size: 18px;
+  font-family: 'Poppins', sans-serif;
+}
+
+@keyframes fadeInOut {
+  0% {
+    opacity: 0;
+  }
+  20% {
+    opacity: 1; /* Fade-in effect */
+  }
+  80% {
+    opacity: 1; /* Keep it visible */
+  }
+  100% {
+    opacity: 0; /* Fade-out effect */
+  }
+}
+
+
